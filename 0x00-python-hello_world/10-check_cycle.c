@@ -1,37 +1,31 @@
-#include <stdio.h>
 #include "lists.h"
 
 /**
- * check_cycle - checks if a singly linked list has a cycle in it
- * @list: head of singly linked list
- * Return: return 0 if there's no cycle, 1 if there is a cycle.
+ * check_cycle - check for loop in LL
+ * @list: head of linked list
+ *
+ * Description - check for loops in LL
+ * Return: 1 if cycled, 0 if not
  */
+
 int check_cycle(listint_t *list)
 {
-	listint_t *temp, *current;
-	int i, j;
+	listint_t *slow, *fast;
 
-	current = list;
-	i = 0;
-
-	while(current)
+	if (!list)
 	{
-		if (i != 0)
-		{
-			temp = list;
-			j = 0;
-			while (j < i)
-			{
-				if (temp == current)
-					return (1);
-
-				j++;
-				temp = temp->next;
-			}
-		}
-		current = current->next;
-		i++;
+		return (0);
 	}
-
+	slow = list;
+	fast = list->next;
+	while (fast && slow && fast->next)
+	{
+		if (slow == fast)
+		{
+			return (1);
+		}
+		slow = slow->next;
+		fast = fast->next->next;
+	}
 	return (0);
 }
